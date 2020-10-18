@@ -36,7 +36,7 @@ namespace ToursandTravel.Models
         /// <summary>
         /// this is a parent object reference
         /// </summary>
-        public Type Type { get; set; }
+        public Type Types { get; set; }
 
         /// <summary>
         /// These are child object references 
