@@ -11,7 +11,7 @@ namespace ToursandTravel.Data
     public class ApplicationDbContext : IdentityDbContext
     {
         //defining model classes here 
-        public DbSet<System.Type> Types { get; set; }
+        public DbSet<PackageType> PackageTypes { get; set; }
         public DbSet<Package> Packages { get; set; }
         public DbSet<Itinerary> Itineraries { get; set; }
         public DbSet<FinalBill> FinalBills { get; set; }
@@ -23,9 +23,9 @@ namespace ToursandTravel.Data
 
             //defining relationships 
 
-            //type and package
+            //packagetype and package
             builder.Entity<Package>()
-                    .HasOne(p => p.Types)
+                    .HasOne(p => p.PackageType)
                     .WithMany(c => c.Packages)
                     .HasForeignKey(p => p.TypeId)
                     .HasConstraintName("FK_Packages_TypeId");
