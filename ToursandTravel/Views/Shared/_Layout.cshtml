@@ -5,13 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - ToursandTravel</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+    <!--<link rel="stylesheet" href="~/css/site.css" />-->
+    <!--CSS taken from https://bootswatch.com/solar/-->
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" />
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ToursandTravel</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ParthJ Tours and Travel</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -45,6 +47,7 @@
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
+            <h5>Fell free to Contact us at +1 202 555 0156 or at parthj@parthjtoursandtravel.com to set an appointment</h5>
         </main>
     </div>
 
