@@ -5,3 +5,5 @@ Tours and Travel Website- Travel agents can login and create/update/delete holid
 CSS taken from https://bootswatch.com/solar/
 
 Some amount of code (eg- Image Processing) has been taken from https://github.com/ifotn
+
+Link to Azure Website: https://parthjtoursandtravel.azurewebsites.net/
