@@ -8,6 +8,10 @@ Some amount of code (eg- Image Processing) has been taken from https://github.co
 
 Link to Azure Website: https://parthjtoursandtravel.azurewebsites.net/
 
+Admin Log in:
+
 admin@gc.ca / Test123$
+
+Customer Log in:
 
 rich@gc.ca / Test123$
