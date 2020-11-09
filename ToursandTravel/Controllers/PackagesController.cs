@@ -13,7 +13,8 @@ using ToursandTravel.Models;
 
 namespace ToursandTravel.Controllers
 {
-    [Authorize]
+    //[Authorize(Roles = "Administrator")]
+    //[Authorize]
     public class PackagesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -23,6 +24,7 @@ namespace ToursandTravel.Controllers
             _context = context;
         }
 
+        
         // GET: Packages
         public async Task<IActionResult> Index()
         {
@@ -49,6 +51,7 @@ namespace ToursandTravel.Controllers
             return View(package);
         }
 
+        [Authorize(Roles = "Administrator")]
         // GET: Packages/Create
         public IActionResult Create()
         {
@@ -56,6 +59,7 @@ namespace ToursandTravel.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Administrator")]
         // POST: Packages/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -97,6 +101,7 @@ namespace ToursandTravel.Controllers
             return View(package);
         }
 
+        [Authorize(Roles = "Administrator")]
         // GET: Packages/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -114,6 +119,7 @@ namespace ToursandTravel.Controllers
             return View(package);
         }
 
+        [Authorize(Roles = "Administrator")]
         // POST: Packages/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -151,6 +157,7 @@ namespace ToursandTravel.Controllers
         }
 
         // GET: Packages/Delete/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -169,6 +176,7 @@ namespace ToursandTravel.Controllers
             return View(package);
         }
 
+        [Authorize(Roles = "Administrator")]
         // POST: Packages/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

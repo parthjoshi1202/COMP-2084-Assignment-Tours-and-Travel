@@ -11,7 +11,7 @@ using ToursandTravel.Models;
 
 namespace ToursandTravel.Controllers
 {
-    [Authorize]
+    [Authorize(Roles ="Administrator")]
     public class PackageTypesController : Controller
     {
         private readonly ApplicationDbContext _context;

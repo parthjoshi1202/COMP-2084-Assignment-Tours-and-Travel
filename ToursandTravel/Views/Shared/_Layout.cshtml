@@ -26,15 +26,16 @@
                         </li>
                         <!--<li class="nav-item">
         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-    </li>-->            @if (User.Identity.IsAuthenticated)
+    </li>-->            @if (User.IsInRole("Administrator"))
     {
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="PackageTypes" asp-action="">Package Types</a>
                         </li>
+    }
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Packages" asp-action="">View Travel Packages</a>
                         </li>
-    }
+    
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="PackageInfo">Package Information</a>
                         </li>
