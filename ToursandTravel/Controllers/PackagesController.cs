@@ -100,7 +100,7 @@ namespace ToursandTravel.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["TypeId"] = new SelectList(_context.PackageTypes, "Id", "Name", package.TypeId);
-            return View(package);
+            return View("Create",package);
         }
 
         [Authorize(Roles = "Administrator")]
@@ -181,7 +181,7 @@ namespace ToursandTravel.Controllers
                 return View("Error");
             }
 
-            return View(package);
+            return View("Delete",package);
         }
 
         [Authorize(Roles = "Administrator")]
