@@ -29,7 +29,7 @@ namespace ToursandTravel.Controllers
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Packages.Include(p => p.PackageType);
-            return View(await applicationDbContext.ToListAsync());
+            return View("Index",await applicationDbContext.ToListAsync());
         }
 
         // GET: Packages/Details/5
@@ -37,7 +37,8 @@ namespace ToursandTravel.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                //return NotFound();
+                return View("Error");
             }
 
             var package = await _context.Packages
@@ -45,10 +46,11 @@ namespace ToursandTravel.Controllers
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (package == null)
             {
-                return NotFound();
+                //return NotFound();
+                return View("Error");
             }
 
-            return View(package);
+            return View("Details",package);
         }
 
         [Authorize(Roles = "Administrator")]
@@ -107,16 +109,18 @@ namespace ToursandTravel.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                // return NotFound();
+                return View("Error");
             }
 
             var package = await _context.Packages.FindAsync(id);
             if (package == null)
             {
-                return NotFound();
+                //return NotFound();
+                return View("Error");
             }
             ViewData["TypeId"] = new SelectList(_context.PackageTypes, "Id", "Name", package.TypeId);
-            return View(package);
+            return View("Edit",package);
         }
 
         [Authorize(Roles = "Administrator")]
@@ -129,7 +133,8 @@ namespace ToursandTravel.Controllers
         {
             if (id != package.Id)
             {
-                return NotFound();
+                //return NotFound();
+                return View("Error");
             }
 
             if (ModelState.IsValid)
@@ -143,7 +148,8 @@ namespace ToursandTravel.Controllers
                 {
                     if (!PackageExists(package.Id))
                     {
-                        return NotFound();
+                        //return NotFound();
+                        return View("Error");
                     }
                     else
                     {
@@ -162,7 +168,8 @@ namespace ToursandTravel.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                //return NotFound();
+                return View("Error");
             }
 
             var package = await _context.Packages
@@ -170,7 +177,8 @@ namespace ToursandTravel.Controllers
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (package == null)
             {
-                return NotFound();
+                //return NotFound();
+                return View("Error");
             }
 
             return View(package);
