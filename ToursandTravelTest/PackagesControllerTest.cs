@@ -80,129 +80,16 @@ namespace ToursandTravelTest
             CollectionAssert.AreEqual(packages.ToList(),model);
         }
 
-        //Test methods for Edit: GET method
-
-        [TestMethod]
-        public void PackagesGetEditNullId() 
-        {
-            var result = controller.Edit(null);
-
-            var viewResult = (ViewResult)result.Result;
-
-            Assert.AreEqual("Error", viewResult.ViewName);
-
-        }
-
-        [TestMethod]
-        public void PackagesGetEditInvalidId()
-        {
-            var result = controller.Edit(8);
-
-            var viewResult = (ViewResult)result.Result;
-
-            Assert.AreEqual("Error", viewResult.ViewName);
-
-        }
-
-        [TestMethod]
-        public void PackagesGetEditValidId()
-        {
-            var result = controller.Edit(51);
-
-            var viewResult = (ViewResult)result.Result;
-
-            Assert.AreEqual("Edit", viewResult.ViewName);
-
-        }
-
-        [TestMethod]
-        public void EditLoadsCorrectModel()
-        {
-            var result = controller.Edit(15);
-            
-            var viewResult = (ViewResult)result.Result;
-            
-            Package model = (Package)viewResult.Model;
-
-            Assert.AreEqual(_context.Packages.Find(15), model);
-        }
-
-        [TestMethod]
-        public void EditLoadsViewData()
-        {
-            var result = controller.Edit(15);
-            
-            var viewResult = (ViewResult)result.Result;
-            
-            var viewData = viewResult.ViewData;
-
-            Assert.AreEqual(viewData, viewResult.ViewData);
-        }
-
-        [TestMethod]
-        public void EditLoadsErrorViewForInvalidModel()
-        {
-            var result = controller.Edit(48);
-            
-            var viewResult = (ViewResult)result.Result;
-            
-            Package model = (Package)viewResult.Model;
-
-            Assert.AreNotEqual(_context.Packages.FindAsync(48), model);
-        }
-
-        //Test methods for Edit: POST method
-        [TestMethod]
-        public void EditPostReturnsId()
-        {
-            var result = controller.Edit(48,packages[0]);
-            
-            var viewResult = (ViewResult)result.Result;
-
-            Assert.AreEqual("Error",viewResult.ViewName);
-        }
-
-        [TestMethod]
-        public void EditPostSave()
-        {
-            var package = packages[1];
-            
-            package.Price = 77;
-            
-            var result = controller.Edit(package.Id, package);
-            
-            var redirectResult = (RedirectToActionResult)result.Result;
-
-            Assert.AreEqual("Index", redirectResult.ActionName);
-        }
-    
-        [TestMethod]
-        public void EditPostDb()
-        {
-            var packageType = new PackageType { Id = 12, Name = "Test Special 1" };
-            
-            var checkPackage = new Package { Id=7, Name="Some Test", Price=89, PackageType=packageType  };
-            
-            var result = controller.Edit(7, checkPackage);
-            
-            var viewResult = (ViewResult)result.Result;
-
-            Assert.AreEqual("Error", viewResult.ViewName);
-        }
-
         // Test Methods for Details 
 
         [TestMethod]
-        public void DetailsNullId() 
+        public void DetailsNullId()
         {
             var result = controller.Details(null);
 
             var viewResult = (ViewResult)result.Result;
 
             Assert.AreEqual("Error", viewResult.ViewName);
-            //Package model = (Package)viewResult.Model;
-
-            //Assert.AreEqual(_context.Packages.FirstOrDefaultAsync(), model);
 
         }
 
@@ -228,70 +115,165 @@ namespace ToursandTravelTest
 
         }
 
-        /*[TestMethod]
-        public void DetailsLoadsCorrectModel()
+        [TestMethod]
+        public void DetailsValidLoadsPackage()
         {
             var result = controller.Details(15);
+            
+            var viewResult = (ViewResult)result.Result;
+
+            Assert.AreEqual("Details", viewResult.ViewName);
+        }
+
+        [TestMethod]
+        public void DetailsInvalidLoadsPackage()
+        {
+            var result = controller.Details(48);
+
+            var viewResult = (ViewResult)result.Result;
+
+            Assert.AreEqual("Error", viewResult.ViewName);
+        }
+
+        //Test Methods for Create: GET
+
+        [TestMethod]
+        public void GetCreateViewLoads()
+        {
+            var result = controller.Create();
+
+            var viewResult = (ViewResult)result;
+
+            Assert.AreEqual("Create", viewResult.ViewName);
+        }
+
+        [TestMethod]
+        public void GetCreateReturnsValidList()
+        {
+            var result = controller.Create();
+
+            var viewData = controller.ViewData["TypeId"];
+
+            Assert.IsNotNull(viewData);
+        }
+
+        //Test Methods for Create: POST
+
+        [TestMethod]
+        public void PostCreateReturnsIndex()
+        {
+            var packageType = new PackageType { Id = 12, Name = "Test Special 1" };
+
+            var package = new Package { Id = 7, Name = "Some Test", Price = 89, PackageType = packageType };
+
+            var result = controller.Create(package, null);
+
+            var redirectResult = (RedirectToActionResult)result.Result;
+
+            Assert.AreEqual("Index",redirectResult.ActionName);
+        }
+
+        [TestMethod]
+        public void PostCreateDb()
+        {
+            var packageType = new PackageType { Id = 12, Name = "Test Special 1" };
+
+            var package = new Package { Id = 7, Name = "Some Test", Price = 89, PackageType = packageType };
+
+            _context.Packages.Add(package);
+
+            _context.SaveChanges();
+
+            Assert.AreEqual(package, _context.Packages.ToArray()[1]);
+        }
+
+        //Test methods for Edit: GET method
+
+        [TestMethod]
+        public void GetEditNullId() 
+        {
+            var result = controller.Edit(null);
+
+            var viewResult = (ViewResult)result.Result;
+
+            Assert.AreEqual("Error", viewResult.ViewName);
+
+        }
+
+        [TestMethod]
+        public void GetEditInvalidId()
+        {
+            var result = controller.Edit(8);
+
+            var viewResult = (ViewResult)result.Result;
+
+            Assert.AreEqual("Error", viewResult.ViewName);
+
+        }
+
+        [TestMethod]
+        public void GetEditValidId()
+        {
+            var result = controller.Edit(51);
+
+            var viewResult = (ViewResult)result.Result;
+
+            Assert.AreEqual("Edit", viewResult.ViewName);
+
+        }
+
+        [TestMethod]
+        public void GetEditLoadsCorrectModel()
+        {
+            var result = controller.Edit(15);
             
             var viewResult = (ViewResult)result.Result;
             
             Package model = (Package)viewResult.Model;
 
             Assert.AreEqual(_context.Packages.Find(15), model);
-            //Assert.AreEqual(_context.Packages.FirstOrDefaultAsync(), model);
-        }*/
+        }
 
         [TestMethod]
-        public void DetailsInvalidLoadsPackage()
+        public void GetEditLoadsViewData()
         {
-            var result = controller.Details(48);
+            var result = controller.Edit(15);
+            
+            var viewResult = (ViewResult)result.Result;
+            
+            var viewData = viewResult.ViewData;
+
+            Assert.AreEqual(viewData, viewResult.ViewData);
+        }
+
+        [TestMethod]
+        public void GetEditLoadsErrorViewForInvalidModel()
+        {
+            var result = controller.Edit(48);
+            
+            var viewResult = (ViewResult)result.Result;
+            
+            Package model = (Package)viewResult.Model;
+
+            Assert.AreNotEqual(_context.Packages.FindAsync(48), model);
+        }
+
+
+
+        //Test methods for Edit: POST method
+        
+        [TestMethod]
+        public void PostEditReturnsId()
+        {
+            var result = controller.Edit(48,packages[0]);
             
             var viewResult = (ViewResult)result.Result;
 
-            //Package model = (Package)viewResult.Model;
-
-            //Assert.AreNotEqual(_context.Packages.FirstOrDefaultAsync(), viewResult.Model);
-            //Assert.AreNotEqual(_context.Packages.FindAsync(48), model);
-            Assert.AreEqual("Error", viewResult.ViewName);
+            Assert.AreEqual("Error",viewResult.ViewName);
         }
 
         [TestMethod]
-        public void DetailsValidLoadsPackage()
-        {
-            var result = controller.Details(51);
-
-            var viewResult = (ViewResult)result.Result;
-
-            //Package model = (Package)viewResult.Model;
-
-            Assert.AreEqual(packages[1], viewResult.Model);
-            //Assert.AreNotEqual(_context.Packages.FindAsync(48), model);
-        }
-
-        //Test Methods for Create: POST
-
-        /*[TestMethod]
-        public void PostCreateInvalidData()
-        {
-            var packageType = new PackageType { Id = 12, Name = "Test Special 1" };
-
-            var checkPackage = new Package { Id = 7, Name = "Some Test", Price = 89, PackageType = packageType };
-
-            var result = controller.Create(checkPackage);
-
-            var viewResult = (ViewResult)result.Result;
-
-            Assert.AreEqual("Create", viewResult.ViewName);
-        }*/
-
-
-
-
-
-        /*
-
-        [TestMethod]
-        public void EditPostSave()
+        public void PostEditSave()
         {
             var package = packages[1];
             
@@ -305,7 +287,7 @@ namespace ToursandTravelTest
         }
     
         [TestMethod]
-        public void EditPostDb()
+        public void PostEditDb()
         {
             var packageType = new PackageType { Id = 12, Name = "Test Special 1" };
             
@@ -317,18 +299,14 @@ namespace ToursandTravelTest
 
             Assert.AreEqual("Error", viewResult.ViewName);
         }
-         */
-
-
-        //Test Methods for Create: GET
-
-
 
 
         //Test Methods for Delete: GET
 
+        
+        
         [TestMethod]
-        public void DeleteGetNullId()
+        public void GetDeleteNullId()
         {
             var result = controller.Delete(null);
 
@@ -338,7 +316,7 @@ namespace ToursandTravelTest
         }
 
         [TestMethod]
-        public void DeleteGetInvalidId()
+        public void GetDeleteInvalidId()
         {
             var result = controller.Delete(9);
 
@@ -348,7 +326,7 @@ namespace ToursandTravelTest
         }
 
         [TestMethod]
-        public void DeleteGetValidId()
+        public void GetDeleteValidId()
         {
             var result = controller.Delete(51);
 
@@ -358,7 +336,7 @@ namespace ToursandTravelTest
         }
 
         [TestMethod]
-        public void DeleteGetInvalidIdLoadsPackage()
+        public void GetDeleteInvalidIdLoadsPackage()
         {
             var result = controller.Delete(48);
 
@@ -368,7 +346,7 @@ namespace ToursandTravelTest
         }
 
         [TestMethod]
-        public void DeleteGetValidIdLoadsPackage()
+        public void GetDeleteValidIdLoadsPackage()
         {
             var result = controller.Delete(51);
 
@@ -380,15 +358,25 @@ namespace ToursandTravelTest
         //Test Methods for Delete: POST
 
         [TestMethod]
-        public void DeletePostRedirect()
+        public void PostDeleteRedirect()
         {
-            var package = packages[1];
-
-            var result = controller.DeleteConfirmed(package.Id);
+            var result = controller.DeleteConfirmed(15);
 
             var redirectResult = (RedirectToActionResult)result.Result;
 
             Assert.AreEqual("Index", redirectResult.ActionName);
+        }
+
+        [TestMethod]
+        public void PostDeleteConfirmed()
+        {
+            var id = 7;
+
+            var result = controller.DeleteConfirmed(id);
+
+            var package =_context.Packages.Find(id);
+
+            Assert.AreEqual(package,null);
         }
 
     }
